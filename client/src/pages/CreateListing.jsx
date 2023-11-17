@@ -32,6 +32,7 @@ export const CreateListing = () => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   console.log(formData);
+  // eslint-disable-next-line
   const handleImageSubmit = (e) => {
     if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
       setUploading(true);
@@ -50,6 +51,7 @@ export const CreateListing = () => {
           setImageUploadError(false);
           setUploading(false);
         })
+        // eslint-disable-next-line
         .catch((err) => {
           setImageUploadError("Image upload failed (2 mb max per image");
           setUploading(false);
