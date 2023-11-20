@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -10,7 +12,7 @@ export default function Contact({ listing }) {
 
   useEffect(() => {
     const fetchLandlord = async () => {
-      try {                    // eslint-disable-next-line
+      try {                   
         const res = await fetch(`/api/user/${listing.userRef}`);
         const data = await res.json();
         setLandlord(data);
@@ -18,7 +20,7 @@ export default function Contact({ listing }) {
         console.log(error);
       }
     };
-    fetchLandlord();            // eslint-disable-next-line
+    fetchLandlord();            
   }, [listing.userRef]);
   return (
     <>
@@ -40,7 +42,6 @@ export default function Contact({ listing }) {
           ></textarea>
 
           <Link
-            // eslint-disable-next-line react/prop-types
             to={`mailto:${landlord.email}?subject=Regarding ${listing.name}&body=${message}`}
             className="bg-slate-700 text-white text-center p-3 uppercase rounded-lg hover:opacity-95"
           >
