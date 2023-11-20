@@ -21,6 +21,7 @@ export default function Header() {
     if (searchTermFromUrl) {
       setSearchTerm(searchTermFromUrl);
     }
+    // eslint-disable-next-line
   }, [location.search]);
   return (
     <header className='bg-slate-200 shadow-md'>

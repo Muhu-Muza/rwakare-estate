@@ -10,7 +10,7 @@ export default function Contact({ listing }) {
 
   useEffect(() => {
     const fetchLandlord = async () => {
-      try {
+      try {                    // eslint-disable-next-line
         const res = await fetch(`/api/user/${listing.userRef}`);
         const data = await res.json();
         setLandlord(data);
@@ -18,7 +18,7 @@ export default function Contact({ listing }) {
         console.log(error);
       }
     };
-    fetchLandlord();
+    fetchLandlord();            // eslint-disable-next-line
   }, [listing.userRef]);
   return (
     <>
@@ -26,7 +26,7 @@ export default function Contact({ listing }) {
         <div className="flex flex-col gap-2">
           <p>
             Contact <span className="font-semibold">{landlord.username}</span>{" "}
-            for{" "}
+            for{" "}            
             <span className="font-semibold">{listing.name.toLowerCase()}</span>
           </p>
           <textarea
@@ -40,6 +40,7 @@ export default function Contact({ listing }) {
           ></textarea>
 
           <Link
+            // eslint-disable-next-line react/prop-types
             to={`mailto:${landlord.email}?subject=Regarding ${listing.name}&body=${message}`}
             className="bg-slate-700 text-white text-center p-3 uppercase rounded-lg hover:opacity-95"
           >
