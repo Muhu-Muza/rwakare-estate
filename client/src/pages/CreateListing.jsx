@@ -5,14 +5,14 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
-import { app } from "../firebase.js";
+import { app } from "../firebase";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 export default function CreateListing() {
   const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
-  const [files, setFiles] = useState({});
+  const [files, setFiles] = useState([]);
   const [formData, setFormData] = useState({
     imageUrls: [],
     name: "",
@@ -32,7 +32,6 @@ export default function CreateListing() {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   console.log(formData);
-  // eslint-disable-next-line
   const handleImageSubmit = (e) => {
     if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
       setUploading(true);
@@ -51,9 +50,8 @@ export default function CreateListing() {
           setImageUploadError(false);
           setUploading(false);
         })
-        // eslint-disable-next-line
         .catch((err) => {
-          setImageUploadError("Image upload failed (2 mb max per image");
+          setImageUploadError("Image upload failed (2 mb max per image)");
           setUploading(false);
         });
     } else {
@@ -163,9 +161,9 @@ export default function CreateListing() {
       <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4">
         <div className="flex flex-col gap-4 flex-1">
           <input
-            className="border p-3 rounded-lg"
             type="text"
             placeholder="Name"
+            className="border p-3 rounded-lg"
             id="name"
             maxLength="62"
             minLength="10"
@@ -174,18 +172,18 @@ export default function CreateListing() {
             value={formData.name}
           />
           <textarea
-            className="border p-3 rounded-lg"
             type="text"
             placeholder="Description"
+            className="border p-3 rounded-lg"
             id="description"
             required
             onChange={handleChange}
             value={formData.description}
           />
           <input
-            className="border p-3 rounded-lg"
             type="text"
             placeholder="Address"
+            className="border p-3 rounded-lg"
             id="address"
             required
             onChange={handleChange}
@@ -218,7 +216,7 @@ export default function CreateListing() {
                 id="parking"
                 className="w-5"
                 onChange={handleChange}
-                value={formData.parking}
+                checked={formData.parking}
               />
               <span>Parking spot</span>
             </div>
@@ -228,7 +226,7 @@ export default function CreateListing() {
                 id="furnished"
                 className="w-5"
                 onChange={handleChange}
-                value={formData.furnished}
+                checked={formData.furnished}
               />
               <span>Furnished</span>
             </div>
@@ -238,7 +236,7 @@ export default function CreateListing() {
                 id="offer"
                 className="w-5"
                 onChange={handleChange}
-                value={formData.offer}
+                checked={formData.offer}
               />
               <span>Offer</span>
             </div>
@@ -275,7 +273,7 @@ export default function CreateListing() {
                 type="number"
                 id="regularPrice"
                 min="50"
-                max="1000000"
+                max="10000000"
                 required
                 className="p-3 border border-gray-300 rounded-lg"
                 onChange={handleChange}
@@ -283,7 +281,9 @@ export default function CreateListing() {
               />
               <div className="flex flex-col items-center">
                 <p>Regular price</p>
-                <span className="text-xs">{`$ / month `}</span>
+                {formData.type === "rent" && (
+                  <span className="text-xs">($ / month)</span>
+                )}
               </div>
             </div>
             {formData.offer && (
@@ -298,10 +298,12 @@ export default function CreateListing() {
                   onChange={handleChange}
                   value={formData.discountPrice}
                 />
-
                 <div className="flex flex-col items-center">
-                  <p>Discounted Price</p>
-                  <span className="text-xs">{`$ / month `}</span>
+                  <p>Discounted price</p>
+
+                  {formData.type === "rent" && (
+                    <span className="text-xs">($ / month)</span>
+                  )}
                 </div>
               </div>
             )}
@@ -359,7 +361,7 @@ export default function CreateListing() {
             disabled={loading || uploading}
             className="p-3 bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
           >
-            {loading ? "Creating..." : "Create Listing"}
+            {loading ? "Creating..." : "Create listing"}
           </button>
           {error && <p className="text-red-700 text-sm">{error}</p>}
         </div>
