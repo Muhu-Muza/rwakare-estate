@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const listingSchema = new mongoose.Schema(
   {
@@ -26,9 +26,13 @@ const listingSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    bedrooms: {
+      type: Number,
+      required: true,
+    },
     furnished: {
       type: Boolean,
-      require: true,
+      required: true,
     },
     parking: {
       type: Boolean,
@@ -36,7 +40,7 @@ const listingSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      require: true,
+      required: true,
     },
     offer: {
       type: Boolean,
